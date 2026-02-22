@@ -71,7 +71,7 @@ let secondNumber = null;
  */
 let operator = null;
 
-// *** Función operate ***
+// *** Función operate() ***
 /**
  * Ejecuta una operación matemática en función del operador indicado.
  *
@@ -166,7 +166,7 @@ function initDigitButtons() {
     });
 }
 
-// *** Función resetCalculator con botón Clear***
+// *** Función resetCalculator() con botón Clear***
 /**
  * Reinicia completamente el estado de la calculadora.
  *
@@ -290,8 +290,61 @@ function initOperatorButtons() {
   });
 }
 
+// *** Función evaluate() ***
+/**
+ * Evalúa la operación actual si hay datos suficientes:
+ * firstNumber + operator + secondNumber.
+ *
+ * Reglas:
+ * - Si falta algún dato, no hace nada (evita errores por "=" prematuro).
+ * - Tras calcular:
+ *   - el resultado pasa a ser firstNumber (para permitir seguir operando),
+ *   - se limpia operator y secondNumber,
+ *   - se marca que se está mostrando un resultado.
+ *
+ * @returns {void}
+ */
+function evaluate() {
+  // Solo evaluamos si hay primer número, operador y un segundo número escrito
+  if (firstNumber === null || operator === null || currentInput === "") {
+    return;
+  }
+
+  secondNumber = Number(currentInput);
+
+  try {
+    const result = operate(operator, firstNumber, secondNumber);
+
+    updateDisplay(String(result));
+
+    // Dejar listo para continuar con el resultado como primer número
+    firstNumber = result;
+    secondNumber = null;
+    operator = null;
+
+    currentInput = "";
+    isShowingResult = true;
+  } catch (err) {
+    handleOperationError(err);
+  }
+}
+
+/**
+ * Inicializa el evento del botón "=".
+ *
+ * @returns {void}
+ */
+function initEqualsButton() {
+  const equalsBtn = document.querySelector('[data-action="equals"]');
+
+  equalsBtn.addEventListener("click", () => {
+    evaluate();
+  });
+}
+
 // *** Inicializa al Cargar la Página ***
 updateDisplay("0");
 initDigitButtons();
 initClearButton();
 initOperatorButtons();
+initEqualsButton();
