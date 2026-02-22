@@ -139,6 +139,10 @@ function appendDigit(digit) {
         isShowingResult = false;
     }
 
+    if (currentInput.length >= MAX_DISPLAY_LENGTH) {
+        return;
+    }
+
     //Evitar "0000000..." como entrada
     if (currentInput === "0") {
         currentInput = digit; //sustituye el 0 por el nuevo dígito
@@ -256,7 +260,7 @@ function setOperator(op) {
       secondNumber = null;
 
       // Mostramos resultado y dejamos preparado para seguir tecleando el siguiente número
-      updateDisplay(String(result));
+      updateDisplay(formatForDisplay(result));
       isShowingResult = true;
 
       // Guardamos el nuevo operador para la siguiente operación
@@ -315,7 +319,7 @@ function evaluate() {
   try {
     const result = operate(operator, firstNumber, secondNumber);
 
-    updateDisplay(String(result));
+    updateDisplay(formatForDisplay(result));
 
     // Dejar listo para continuar con el resultado como primer número
     firstNumber = result;
@@ -340,6 +344,59 @@ function initEqualsButton() {
   equalsBtn.addEventListener("click", () => {
     evaluate();
   });
+}
+
+// *** Reglas de Visualización ***
+/**
+ * Longitud máxima (aprox.) permitida en el display para evitar desbordes.
+ * @type {number}
+ */
+const MAX_DISPLAY_LENGTH = 12;
+
+/**
+ * Formatea un número para mostrarlo en el display sin desbordar.
+ *
+ * Reglas:
+ * - Si es entero y cabe, se muestra tal cual.
+ * - Si tiene decimales, se redondea para que quepa.
+ * - Si aun así no cabe, se usa notación científica (toPrecision).
+ *
+ * @param {number} value - Número a formatear.
+ * @returns {string} Representación segura para el display.
+ */
+function formatForDisplay(value) {
+  if (!Number.isFinite(value)) {
+    return "Error";
+  }
+
+  // Evitar -0
+  if (Object.is(value, -0)) {
+    value = 0;
+  }
+
+  // Caso simple: tal cual
+  let str = String(value);
+  if (str.length <= MAX_DISPLAY_LENGTH) {
+    return str;
+  }
+
+  // Si es decimal, intentamos redondear
+  if (!Number.isInteger(value)) {
+    // Número de decimales disponible = MAX - (parte entera + punto)
+    const absValue = Math.abs(value);
+    const intDigits = String(Math.trunc(absValue)).length;
+    const decimalsAllowed = Math.max(0, MAX_DISPLAY_LENGTH - intDigits - 1);
+
+    const rounded = Number(value.toFixed(decimalsAllowed));
+    str = String(rounded);
+
+    if (str.length <= MAX_DISPLAY_LENGTH) {
+      return str;
+    }
+  }
+
+  // Último recurso: notación científica con precisión limitada
+  return value.toPrecision(Math.min(10, MAX_DISPLAY_LENGTH));
 }
 
 // *** Inicializa al Cargar la Página ***
