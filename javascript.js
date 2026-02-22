@@ -435,7 +435,7 @@ function appendDecimal() {
   updateDisplay(currentInput);
 }
 
-/**
+/** 
  * Inicializa el evento del botón decimal ".".
  *
  * @returns {void}
@@ -448,6 +448,46 @@ function initDecimalButton() {
   });
 }
 
+// *** Función backspace() ***
+/**
+ * Elimina el último carácter del número en escritura.
+ *
+ * Reglas:
+ * - Si se estaba mostrando un resultado, backspace inicia una entrada nueva (0).
+ * - Si al borrar queda vacío, el display pasa a "0".
+ *
+ * @returns {void}
+ */
+function backspace() {
+  if (isShowingResult) {
+    // Si hay un resultado en pantalla, no tiene sentido "recortarlo" como si fuera entrada
+    currentInput = "";
+    isShowingResult = false;
+    updateDisplay("0");
+    return;
+  }
+
+  if (currentInput === "") {
+    return;
+  }
+
+  currentInput = currentInput.slice(0, -1);
+  updateDisplay(currentInput === "" ? "0" : currentInput);
+}
+
+/**
+ * Inicializa el evento del botón backspace.
+ *
+ * @returns {void}
+ */
+function initBackspaceButton() {
+  const backspaceBtn = document.querySelector('[data-action="backspace"]');
+
+  backspaceBtn.addEventListener("click", () => {
+    backspace();
+  });
+}
+
 // *** Inicializa al Cargar la Página ***
 updateDisplay("0");
 initDigitButtons();
@@ -455,3 +495,4 @@ initClearButton();
 initOperatorButtons();
 initEqualsButton();
 initDecimalButton();
+initBackspaceButton();
