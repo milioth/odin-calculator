@@ -488,6 +488,63 @@ function initBackspaceButton() {
   });
 }
 
+// *** Soporte de Teclado
+/**
+ * Gestiona la entrada por teclado para controlar la calculadora.
+ *
+ * @param {KeyboardEvent} event - Evento de teclado.
+ * @returns {void}
+ */
+function handleKeydown(event) {
+  const key = event.key;
+
+  // Dígitos
+  if (key >= "0" && key <= "9") {
+    appendDigit(key);
+    return;
+  }
+
+  // Decimal
+  if (key === ".") {
+    appendDecimal();
+    return;
+  }
+
+  // Operadores
+  if (key === "+" || key === "-" || key === "*" || key === "/") {
+    setOperator(key);
+    return;
+  }
+
+  // Evaluar (Enter o "=")
+  if (key === "Enter" || key === "=") {
+    event.preventDefault(); // evita efectos en formularios (si los hubiera)
+    evaluate();
+    return;
+  }
+
+  // Clear
+  if (key === "Escape") {
+    resetCalculator();
+    return;
+  }
+
+  // Backspace
+  if (key === "Backspace") {
+    backspace();
+    return;
+  }
+}
+
+/**
+ * Inicializa el soporte de teclado.
+ *
+ * @returns {void}
+ */
+function initKeyboardSupport() {
+  document.addEventListener("keydown", handleKeydown);
+}
+
 // *** Inicializa al Cargar la Página ***
 updateDisplay("0");
 initDigitButtons();
@@ -496,3 +553,4 @@ initOperatorButtons();
 initEqualsButton();
 initDecimalButton();
 initBackspaceButton();
+initKeyboardSupport();
