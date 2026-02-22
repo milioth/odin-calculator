@@ -151,7 +151,30 @@ function appendDigit(digit) {
     }
 
     updateDisplay(currentInput === "" ? "0" : currentInput)
+
+    // Easter Egg: "67"
+    if (currentInput === "67") {
+        triggerEasterEgg();
+    }
 }
+
+/**
+ * Activa el Easter Egg: hace que la calculadora tiemble y se incline.
+ */
+function triggerEasterEgg() {
+  const calculator = document.querySelector(".calculator");
+  if (calculator) {
+    calculator.classList.remove("trigger-shake"); // Reset si ya estaba
+    void calculator.offsetWidth; // Force reflow
+    calculator.classList.add("trigger-shake");
+    
+    // Limpiar al terminar
+    calculator.addEventListener("animationend", () => {
+      calculator.classList.remove("trigger-shake");
+    }, { once: true });
+  }
+}
+
 
 // *** Eventos de Clics en Botones Numéricos ***
 /**

@@ -363,6 +363,18 @@ input:checked + .slider:before {
   transform: rotate(10deg);
 }
 
+@keyframes easter-egg-67 {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  10%, 30%, 50%, 70%, 90% { transform: rotate(-2deg) translateY(-5px); } /* Lado izquierdo sube */
+  20%, 40%, 60%, 80% { transform: rotate(2deg) translateY(5px); }    /* Lado derecho sube */
+}
+
+.trigger-shake {
+  animation: easter-egg-67 0.8s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
 /* Responsive */
 @media (min-width: 640px) {
   .footer-container {
