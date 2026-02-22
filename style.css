@@ -1,0 +1,61 @@
+/* Estilos básicos para que se vea como una calculadora */
+body {
+    font-family: system-ui, Arial, sans-serif;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.calculator {
+    width: 320px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.display {
+    height: 64px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 32px;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    height: 56px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: #f7f7f7;
+    cursor: pointer;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-zero {
+    grid-column: span 2;
+}
+
+.btn-equals {
+    grid-row: span 2;
+    height: auto;
+}
+
+.btn-clear {
+    grid-column: span 1;
+}

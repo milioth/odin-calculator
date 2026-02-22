@@ -4,9 +4,48 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Calculadora</h1>
+    <main class="calculator">
+      <div class="display" id="display">12345</div>
+      <div class="buttons">
+        <button type="button" class="btn btn-clear" data-action="clear">
+          C
+        </button>
+        <button type="button" class="btn btn-operator" data-operator="/">
+          ÷
+        </button>
+        <button type="button" class="btn btn-operator" data-operator="*">
+          ×
+        </button>
+        <button type="button" class="btn btn-operator" data-operator="-">
+          −
+        </button>
+
+        <button type="button" class="btn btn-digit" data-digit="7">7</button>
+        <button type="button" class="btn btn-digit" data-digit="8">8</button>
+        <button type="button" class="btn btn-digit" data-digit="9">9</button>
+        <button type="button" class="btn btn-operator" data-operator="+">
+          +
+        </button>
+
+        <button type="button" class="btn btn-digit" data-digit="4">4</button>
+        <button type="button" class="btn btn-digit" data-digit="5">5</button>
+        <button type="button" class="btn btn-digit" data-digit="6">6</button>
+        <button type="button" class="btn btn-equals" data-action="equals">
+          =
+        </button>
+
+        <button type="button" class="btn btn-digit" data-digit="1">1</button>
+        <button type="button" class="btn btn-digit" data-digit="2">2</button>
+        <button type="button" class="btn btn-digit" data-digit="3">3</button>
+
+        <button type="button" class="btn btn-digit btn-zero" data-digit="0">
+          0
+        </button>
+      </div>
+    </main>
 
     <script src="javascript.js"></script>
   </body>

@@ -56,7 +56,7 @@ function divide(a, b) {
  * Primer número introducido por el usuario.
  * @type {number|null}
  */
-let firtNumber = null;
+let firstNumber = null;
 
 /**
  * Segundo número introducido por el usuario.
