@@ -196,7 +196,102 @@ function initClearButton() {
     });
 }
 
+// *** Manejador de errores de operación ***
+/**
+ * Gestiona errores de cálculo (por ejemplo, división entre 0).
+ *
+ * @param {Error} err - Error capturado.
+ * @returns {void}
+ */
+function handleOperationError(err) {
+  updateDisplay(`Error: ${err.message}`);
+  resetCalculator(); // deja la calculadora en estado limpio tras mostrar el error
+}
+
+// *** Función para Seleccionar Operador (Lógica Principal) ***
+/**
+ * Establece el operador y gestiona el estado de la operación.
+ *
+ * Reglas:
+ * - Si no hay firstNumber y hay currentInput: currentInput pasa a firstNumber.
+ * - Si ya hay firstNumber y operator, y además hay currentInput: se evalúa y
+ *   el resultado pasa a ser el nuevo firstNumber (encadenado).
+ * - Si se pulsan operadores consecutivos (sin currentInput), no se evalúa nada:
+ *   solo se actualiza el operador al último pulsado.
+ *
+ * @param {string} op - Operador ("+", "-", "*", "/").
+ * @returns {void}
+ */
+function setOperator(op) {
+  // Caso: no hay nada escrito ni primer número -> no hacemos nada
+  if (firstNumber === null && currentInput === "") {
+    return;
+  }
+
+  // Caso: aún no hay firstNumber, pero sí hay entrada actual
+  if (firstNumber === null && currentInput !== "") {
+    firstNumber = Number(currentInput);
+    operator = op;
+    currentInput = "";
+    isShowingResult = false;
+    updateDisplay(String(firstNumber));
+    return;
+  }
+
+  // Caso: ya existe firstNumber y el usuario pulsa operadores consecutivos
+  // (no hay segundo número aún)
+  if (firstNumber !== null && currentInput === "") {
+    operator = op; // solo sustituimos el operador
+    return;
+  }
+
+  // Caso: hay firstNumber y currentInput (segundo número). Si además hay operador previo,
+  // evaluamos para encadenar.
+  if (firstNumber !== null && currentInput !== "" && operator !== null) {
+    secondNumber = Number(currentInput);
+
+    try {
+      const result = operate(operator, firstNumber, secondNumber);
+      firstNumber = result;
+      secondNumber = null;
+
+      // Mostramos resultado y dejamos preparado para seguir tecleando el siguiente número
+      updateDisplay(String(result));
+      isShowingResult = true;
+
+      // Guardamos el nuevo operador para la siguiente operación
+      operator = op;
+      currentInput = "";
+    } catch (err) {
+      handleOperationError(err);
+    }
+
+    return;
+  }
+
+  // Caso residual: si hay firstNumber y currentInput pero no hay operator (poco probable),
+  // simplemente establecemos operador.
+  operator = op;
+}
+
+/**
+ * Inicializa los eventos de los botones de operador.
+ *
+ * @returns {void}
+ */
+function initOperatorButtons() {
+  const operatorButtons = document.querySelectorAll(".btn-operator");
+
+  operatorButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const op = btn.dataset.operator; // "+", "-", "*", "/"
+      setOperator(op);
+    });
+  });
+}
+
 // *** Inicializa al Cargar la Página ***
 updateDisplay("0");
 initDigitButtons();
 initClearButton();
+initOperatorButtons();
