@@ -5,54 +5,149 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculadora</title>
     <link rel="stylesheet" href="style.css" />
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <main class="calculator">
-      <div class="display" id="display">12345</div>
-      <div class="buttons">
-        <button type="button" class="btn btn-clear" data-action="clear">
-          C
-        </button>
-        <button type="button" class="btn btn-backspace" data-action="backspace">
-          ⌫
-        </button>
-        <button type="button" class="btn btn-operator" data-operator="/">
-          ÷
-        </button>
-        <button type="button" class="btn btn-operator" data-operator="*">
-          ×
-        </button>
-        <button type="button" class="btn btn-operator" data-operator="-">
-          −
-        </button>
+  <body class="light-mode">
+    <header class="header">
+      <div class="header-container">
+        <h1 class="logo">Calculadora <span>Pro</span></h1>
+        <div class="theme-switch-wrapper">
+          <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round">
+              <span class="mode-icon sun">☀️</span>
+              <span class="mode-icon moon">🌙</span>
+            </div>
+          </label>
+          <span id="theme-indicator" class="theme-indicator">Modo Claro</span>
+        </div>
+      </div>
+    </header>
 
-        <button type="button" class="btn btn-digit" data-digit="7">7</button>
-        <button type="button" class="btn btn-digit" data-digit="8">8</button>
-        <button type="button" class="btn btn-digit" data-digit="9">9</button>
-        <button type="button" class="btn btn-operator" data-operator="+">
-          +
-        </button>
+    <main class="main-content">
+      <div class="calculator-container">
+        <section class="calculator" aria-label="Calculadora">
+          <div class="display" id="display">0</div>
+          <div class="buttons">
+            <button
+              type="button"
+              class="btn btn-clear accent"
+              data-action="clear"
+            >
+              C
+            </button>
+            <button
+              type="button"
+              class="btn btn-backspace accent"
+              data-action="backspace"
+            >
+              ⌫
+            </button>
+            <button type="button" class="btn btn-operator" data-operator="/">
+              ÷
+            </button>
+            <button type="button" class="btn btn-operator" data-operator="*">
+              ×
+            </button>
+            <button type="button" class="btn btn-operator" data-operator="-">
+              −
+            </button>
 
-        <button type="button" class="btn btn-digit" data-digit="4">4</button>
-        <button type="button" class="btn btn-digit" data-digit="5">5</button>
-        <button type="button" class="btn btn-digit" data-digit="6">6</button>
-        <button type="button" class="btn btn-equals" data-action="equals">
-          =
-        </button>
+            <button type="button" class="btn btn-digit" data-digit="7">
+              7
+            </button>
+            <button type="button" class="btn btn-digit" data-digit="8">
+              8
+            </button>
+            <button type="button" class="btn btn-digit" data-digit="9">
+              9
+            </button>
+            <button type="button" class="btn btn-operator" data-operator="+">
+              +
+            </button>
 
-        <button type="button" class="btn btn-digit" data-digit="1">1</button>
-        <button type="button" class="btn btn-digit" data-digit="2">2</button>
-        <button type="button" class="btn btn-digit" data-digit="3">3</button>
+            <button type="button" class="btn btn-digit" data-digit="4">
+              4
+            </button>
+            <button type="button" class="btn btn-digit" data-digit="5">
+              5
+            </button>
+            <button type="button" class="btn btn-digit" data-digit="6">
+              6
+            </button>
+            <button type="button" class="btn btn-equals" data-action="equals">
+              =
+            </button>
 
-        <button type="button" class="btn btn-decimal" data-action="decimal">
-          .
-        </button>
+            <button type="button" class="btn btn-digit" data-digit="1">
+              1
+            </button>
+            <button type="button" class="btn btn-digit" data-digit="2">
+              2
+            </button>
+            <button type="button" class="btn btn-digit" data-digit="3">
+              3
+            </button>
 
-        <button type="button" class="btn btn-digit btn-zero" data-digit="0">
-          0
-        </button>
+            <button type="button" class="btn btn-decimal" data-action="decimal">
+              .
+            </button>
+            <button type="button" class="btn btn-digit btn-zero" data-digit="0">
+              0
+            </button>
+          </div>
+        </section>
       </div>
     </main>
+
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-info">
+          <p>
+            &copy; <span id="current-year"></span> - Desarrollado por
+            <span class="author-name">milioth</span>
+          </p>
+        </div>
+        <div class="footer-links">
+          <a
+            href="https://github.com/milioth"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link-icon"
+            title="Perfil de GitHub"
+          >
+            <svg viewBox="0 0 24 24" class="github-icon" width="24" height="24">
+              <path
+                fill="currentColor"
+                d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.5,21.27 9.5,21C9.5,20.77 9.49,20.14 9.49,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.5,7.17C10.29,6.95 11.15,6.84 12,6.84C12.85,6.84 13.71,6.95 14.5,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.48,20.68 14.48,21C14.48,21.27 14.65,21.59 15.15,21.5C19.14,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z"
+              />
+            </svg>
+            <span>GitHub</span>
+          </a>
+          <a
+            href="https://github.com/milioth/odin-calculator"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link-icon"
+            title="Repositorio del Proyecto"
+          >
+            <svg viewBox="0 0 24 24" class="repo-icon" width="24" height="24">
+              <path
+                fill="currentColor"
+                d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2,12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M15,12L12,15L9,12H11V8H13V12H15Z"
+              />
+            </svg>
+            <span>Repo</span>
+          </a>
+        </div>
+      </div>
+    </footer>
 
     <script src="javascript.js"></script>
   </body>

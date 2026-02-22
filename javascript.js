@@ -545,12 +545,60 @@ function initKeyboardSupport() {
   document.addEventListener("keydown", handleKeydown);
 }
 
+// *** Funciones de UI Adicionales ***
+
+/**
+ * Establece el año actual en el footer.
+ */
+function initDynamicYear() {
+  const yearSpan = document.getElementById("current-year");
+  if (yearSpan) {
+    yearSpan.textContent = new Date().getFullYear();
+  }
+}
+
+/**
+ * Gestiona el cambio de tema (Light/Dark Mode).
+ */
+function initThemeToggle() {
+  const themeCheckbox = document.getElementById("checkbox");
+  const themeIndicator = document.getElementById("theme-indicator");
+  const body = document.body;
+
+  // Cargar preferencia guardada
+  const currentTheme = localStorage.getItem("theme") || "light";
+  if (currentTheme === "dark") {
+    body.classList.remove("light-mode");
+    body.classList.add("dark-mode");
+    if (themeCheckbox) themeCheckbox.checked = true;
+    if (themeIndicator) themeIndicator.textContent = "Modo Oscuro";
+  }
+
+  if (themeCheckbox) {
+    themeCheckbox.addEventListener("change", () => {
+      if (themeCheckbox.checked) {
+        body.classList.replace("light-mode", "dark-mode");
+        themeIndicator.textContent = "Modo Oscuro";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.classList.replace("dark-mode", "light-mode");
+        themeIndicator.textContent = "Modo Claro";
+        localStorage.setItem("theme", "light");
+      }
+    });
+  }
+}
+
 // *** Inicializa al Cargar la Página ***
-updateDisplay("0");
-initDigitButtons();
-initClearButton();
-initOperatorButtons();
-initEqualsButton();
-initDecimalButton();
-initBackspaceButton();
-initKeyboardSupport();
+document.addEventListener("DOMContentLoaded", () => {
+    updateDisplay("0");
+    initDigitButtons();
+    initClearButton();
+    initOperatorButtons();
+    initEqualsButton();
+    initDecimalButton();
+    initBackspaceButton();
+    initKeyboardSupport();
+    initDynamicYear();
+    initThemeToggle();
+});
