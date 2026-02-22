@@ -1,7 +1,7 @@
 //Use script para evitar errores
 "use strict";
 
-//  *** Funciones Básicas ***
+// *** Funciones Básicas ***
 /**
  * Suma dos números.
  *
@@ -51,7 +51,7 @@ function divide(a, b) {
     return a / b;
 }
 
-//  *** Variables de Estado ***
+// *** Variables de Estado ***
 /**
  * Primer número introducido por el usuario.
  * @type {number|null}
@@ -96,3 +96,76 @@ function operate(op, a, b) {
             throw new Error("Operador no válido.");
     }
 }
+
+// *** Variables de entrada ***
+/**
+ * Número que el usuario está introduciendo actualmente (como texto).
+ * @type {string}
+ */
+let currentInput = "";
+
+/**
+ * Indica si el display está mostrando un resultado y el siguiente dígito
+ * debe empezar una operación nueva en vez de “pegarse” al resultado.
+ * @type {boolean}
+ */
+let isShowingResult = false;
+
+// *** Funciones para Actualizar Display y Añadir Dígitos ***
+/**
+ * Actualiza el contenido del display de la calculadora.
+ *
+ * @param {string} value - Texto a mostrar en el display.
+ * @returns {void}
+ */
+function updateDisplay(value) {
+    const display = document.getElementById("display");
+    display.textContent = value;
+}
+
+/**
+ * Añade un dígito al número que el usuario está introduciendo.
+ *
+ * Reglas:
+ * - Si estábamos mostrando un resultado, comenzar desde cero.
+ * - Evitar ceros iniciales innecesarios (ej.: "0002" -> "2").
+ *
+ * @param {string} digit - Dígito pulsado ("0"..."9").
+ * @returns {void}
+ */
+function appendDigit(digit) {
+    if (isShowingResult) {
+        currentInput = "";
+        isShowingResult = false;
+    }
+
+    //Evitar "0000000..." como entrada
+    if (currentInput === "0") {
+        currentInput = digit; //sustituye el 0 por el nuevo dígito
+    } else {
+        currentInput += digit; 
+    }
+
+    updateDisplay(currentInput === "" ? "0" : currentInput)
+}
+
+// *** Eventos de Clics en Botones Numéricos ***
+/**
+ * Inicializa los eventos de los botones de dígitos.
+ *
+ * @returns {void}
+ */
+function initDigitButtons() { 
+    const digitButtons = document.querySelectorAll(".btn-digit");
+
+    digitButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            const digit = btn.dataset.digit; // "0".."9"
+            appendDigit(digit);
+        });
+    });
+}
+
+// *** Inicializa al Cargar la Página ***
+updateDisplay("0");
+initDigitButtons();
