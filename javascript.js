@@ -166,6 +166,37 @@ function initDigitButtons() {
     });
 }
 
+// *** Función resetCalculator con botón Clear***
+/**
+ * Reinicia completamente el estado de la calculadora.
+ *
+ * @returns {void}
+ */
+function resetCalculator() { 
+    firstNumber = null;
+    secondNumber = null;
+    operator = null;
+
+    currentInput = "";
+    isShowingResult = false;
+
+    updateDisplay(0);
+}
+
+/**
+ * Inicializa el evento del botón Clear (C).
+ *
+ * @returns {void}
+ */
+function initClearButton() {
+    const clearBtn = document.querySelector('[data-action = "clear"]');
+
+    clearBtn.addEventListener("click", () => {
+        resetCalculator();
+    });
+}
+
 // *** Inicializa al Cargar la Página ***
 updateDisplay("0");
 initDigitButtons();
+initClearButton();
