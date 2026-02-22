@@ -399,9 +399,59 @@ function formatForDisplay(value) {
   return value.toPrecision(Math.min(10, MAX_DISPLAY_LENGTH));
 }
 
+// *** Función appendDecimal() ***
+/**
+ * Añade el separador decimal al número en escritura.
+ *
+ * Reglas:
+ * - Si estamos mostrando un resultado, se inicia un número nuevo "0."
+ * - Si currentInput está vacío, se convierte en "0."
+ * - Si ya existe ".", no se añade otro.
+ *
+ * @returns {void}
+ */
+function appendDecimal() {
+  if (isShowingResult) {
+    currentInput = "";
+    isShowingResult = false;
+  }
+
+  if (currentInput === "") {
+    currentInput = "0.";
+    updateDisplay(currentInput);
+    return;
+  }
+
+  if (currentInput.includes(".")) {
+    return;
+  }
+
+  // Respeta el límite de display si lo estás aplicando
+  if (currentInput.length >= MAX_DISPLAY_LENGTH) {
+    return;
+  }
+
+  currentInput += ".";
+  updateDisplay(currentInput);
+}
+
+/**
+ * Inicializa el evento del botón decimal ".".
+ *
+ * @returns {void}
+ */
+function initDecimalButton() {
+  const decimalBtn = document.querySelector('[data-action="decimal"]');
+
+  decimalBtn.addEventListener("click", () => {
+    appendDecimal();
+  });
+}
+
 // *** Inicializa al Cargar la Página ***
 updateDisplay("0");
 initDigitButtons();
 initClearButton();
 initOperatorButtons();
 initEqualsButton();
+initDecimalButton();
